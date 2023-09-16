@@ -1,5 +1,5 @@
 ---
-import { SITE_DESCRIPTION, SITE_NAME, SITE_TITLE } from "../consts";
+import { SITE_AUTHOR, SITE_DESCRIPTION, SITE_NAME, SITE_TITLE } from "../consts";
 
 export interface Props {
   title?: string;
@@ -94,6 +94,7 @@ function getOgImage({
 <title>{getTitle(title)}</title>
 <meta name="title" content={getTitle(title)} />
 <meta name="description" content={getDescription(description)} />
+<meta name="author" content={SITE_AUTHOR}>
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="website" />
