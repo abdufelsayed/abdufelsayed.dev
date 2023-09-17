@@ -10,13 +10,17 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "prettier": "prettier --write . --plugin=prettier-plugin-astro --plugin=prettier-plugin-tailwindcss",
     "commit": "git-cz"
   },
   "config": {
     "commitizen": {
       "path": "@commitlint/cz-commitlint"
     }
+  },
+  "lint-staged": {
+    "*.{js,cjs,mjs,ts,jsx,tsx,json,astro}": [
+      "prettier --write --plugin=prettier-plugin-astro --plugin=prettier-plugin-tailwindcss"
+    ]
   },
   "dependencies": {
     "@astrojs/mdx": "^0.19.7",
