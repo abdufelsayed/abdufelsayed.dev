@@ -29,7 +29,14 @@ const rehypePrettyCodeOptions = {
 // https://astro.build/config
 export default defineConfig({
   site: "https://abdllah.dev",
-  integrations: [mdx(), sitemap(), tailwind(), react()],
+  integrations: [
+    mdx(),
+    sitemap(),
+    tailwind({
+      applyBaseStyles: false,
+    }),
+    react(),
+  ],
   markdown: {
     extendDefaultPlugins: true,
     syntaxHighlight: false,

@@ -4,7 +4,7 @@ import FormattedDate from "@/components/formatted-date.astro";
 import BaseLayout from "@/layouts/base-layout.astro";
 import TableOfContent from "@/components/toc.astro";
 import { Image } from "astro:assets";
-import SeriesCard from "@/components/series-card.astro";
+import { SeriesAccordion } from "@/components/series-accordion";
 
 type Blog = CollectionEntry<"blog">["data"];
 
@@ -30,12 +30,16 @@ const {
   readingTime,
   headings,
   seriesId,
-  orderInSeries,
+  index,
 } = Astro.props;
 
 const series = (await getCollection("series")).find(
   (s) => s.data.id === seriesId
 );
+
+const posts = (await getCollection("blog"))
+  .filter((post) => series?.data.id === post.data.seriesId)
+  .sort((a, b) => (a.data.index as number) - (b.data.index as number));
 ---
 
 <BaseLayout
@@ -88,7 +92,16 @@ const series = (await getCollection("series")).find(
     <div class="space-x-10 md:flex">
       <div class="w-full">
         <div class="not-prose my-10">
-          {series && <SeriesCard series={series} order={orderInSeries} />}
+          {
+            series && (
+              <SeriesAccordion
+                series={series}
+                posts={posts}
+                current={index}
+                client:idle
+              />
+            )
+          }
         </div>
         <article>
           <slot />
@@ -167,4 +180,4 @@ const series = (await getCollection("series")).find(
       button.innerText = "Copy";
     }, 750);
   }
-</script>
+</script>@/components/series-card

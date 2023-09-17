@@ -4,7 +4,7 @@ import Projects from "@/components/projects.astro";
 import { getCollection } from "astro:content";
 
 import Posts from "@/components/posts.astro";
-import SeriesList from "@/components/series-list.astro";
+import SeriesList from "@/components/series.astro";
 import Intro from "@/components/intro.astro";
 
 const posts = await getCollection("blog");
@@ -85,7 +85,7 @@ const sortedProjects = projects.sort((a, b) => a.data.index - b.data.index);
               View all
             </a>
           </div>
-          <SeriesList series={featuredSeries} />
+          <SeriesList seriesList={featuredSeries} />
         </div>
       )
     }

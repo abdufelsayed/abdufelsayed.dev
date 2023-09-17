@@ -1,15 +1,15 @@
-import { cn } from "@/lib/cn";
 import type { CollectionEntry } from "astro:content";
-import { ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
+import { ChevronDown, ChevronUp } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface Props {
   series: CollectionEntry<"series">;
   posts: CollectionEntry<"blog">[];
-  order?: number;
+  current?: number;
 }
 
-export default function ({ series, posts, order }: Props) {
+export function SeriesAccordion({ series, posts, current }: Props) {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOnClick = () => {
@@ -30,13 +30,17 @@ export default function ({ series, posts, order }: Props) {
               {series.data.title}
             </h3>
             <span>{`${
-              order
-                ? ` • ${order} of ${posts.length}`
+              current
+                ? ` • ${current} of ${posts.length}`
                 : ` • ${posts.length} Posts`
             }`}</span>
           </div>
-          <div className="text-black dark:text-white">
-            {isOpen ? <ChevronUp /> : <ChevronDown />}
+          <div>
+            {isOpen ? (
+              <ChevronUp className="h-4 w-4 rotate-180 transition-all" />
+            ) : (
+              <ChevronDown className="h-4 w-4 -rotate-180 transition-all" />
+            )}
           </div>
         </div>
         <p className="text-sm text-muted-foreground">
@@ -47,11 +51,12 @@ export default function ({ series, posts, order }: Props) {
         <ul className="space-y-1 p-5">
           {posts.map((post, index) => (
             <li
+              key={post.id}
               className={cn(
                 "relative pl-4 before:absolute before:left-0 before:top-[0.7rem] before:h-1.5 before:w-1.5 before:rounded-full before:bg-black dark:before:bg-white",
                 {
-                  "before:bg-blue-600 before:ring-[2.5px] before:ring-blue-600/40":
-                    order === index + 1,
+                  "before:bg-blue-600 before:ring-[2.5px] before:ring-blue-600/40 dark:before:bg-blue-600":
+                    current === index + 1,
                   "before:bg-muted-foreground": post.data.planned,
                 }
               )}

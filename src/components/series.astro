@@ -1,0 +1,21 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+import { SeriesAccordion } from "@/components/series-accordion";
+
+export interface Props {
+  seriesList: CollectionEntry<"series">[];
+}
+
+const { seriesList } = Astro.props;
+---
+
+<section>
+  {
+    seriesList.map(async (series) => {
+      const posts = (await getCollection("blog"))
+        .filter((post) => series.data.id === post.data.seriesId)
+        .sort((a, b) => (a.data.index as number) - (b.data.index as number));
+      return <SeriesAccordion series={series} posts={posts} client:idle />;
+    })
+  }
+</section>

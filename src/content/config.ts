@@ -21,7 +21,7 @@ const blog = defineCollection({
       featured: z.boolean().default(false),
       planned: z.boolean().default(false),
       seriesId: z.string().optional(),
-      orderInSeries: z.number().optional(),
+      index: z.number().optional(),
       pubDate: z
         .string()
         .or(z.date())
