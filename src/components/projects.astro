@@ -1,6 +1,8 @@
 ---
-import { cn } from "@/lib/cn";
+import { ExternalLink } from "lucide-react"
 import type { CollectionEntry } from "astro:content";
+import { buttonVariants } from "./ui/button";
+import { cn } from "@/lib/cn";
 
 export interface Props {
   projects: CollectionEntry<"project">[];
@@ -13,19 +15,25 @@ const { projects } = Astro.props;
   <h2 class="font-medium text-2xl">Projects</h2>
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
     {projects.map((project) => (
-      <a href={project.data.link} target="_blank" class={cn("flex flex-col p-6 gap-y-2 justify-between min-h-full rounded-lg border bg-card text-card-foreground shadow-sm", {
-        "hover:bg-muted": project.data.link
-      })}>
+      <div class="flex flex-col justify-between p-6 gap-y-2 rounded-lg border bg-card text-card-foreground shadow-sm">
         <div class="flex flex-col gap-y-2">
-          <h3 class="text-xl font-semibold leading-none tracking-tight">
-            {project.data.title}
-          </h3>
+          <div class="flex justify-between items-center">
+            <h3 class="text-xl font-semibold leading-none tracking-tight">
+              {project.data.title}
+            </h3>
+            {
+              project.data.link && (
+              <a href={project.data.link} target="_blank" class={cn(buttonVariants({ variant: "ghost" }), "p-1 h-7 w-7")}>
+                <ExternalLink className="h-3.5 w-3.5" />
+              </a>)
+            }
+          </div>
           <p class="text-sm text-muted-foreground">{project.data.description}</p>
         </div>
-        <ul class="text-sm text-muted-foreground flex gap-2">
+        <ul class="text-sm flex flex-wrap text-muted-foreground gap-x-2">
           {project.data.tags.map((tag) => (<li class="underline underline-offset-2">{`#${tag}`}</li>))}
         </ul>
-      </a>
+      </div>
     ))}
   </div>
 </section>
