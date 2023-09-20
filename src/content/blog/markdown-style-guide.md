@@ -7,6 +7,7 @@ index: 5
 pubDate: "Jul 01 2022"
 cover: "@/assets/post-covers/cover.png"
 coverAlt: "Hero Image"
+published: true
 tags:
   - markdown
   - guide
