@@ -8,7 +8,6 @@ cover: "@/assets/covers/cover2.png"
 coverAlt: "Hero Image"
 tags:
   - third-post
-published: true
 pinned: true
 ---
 

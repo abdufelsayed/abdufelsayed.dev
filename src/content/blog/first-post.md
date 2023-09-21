@@ -3,7 +3,6 @@ title: "First post"
 description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel hendrerit lorem, eu vehicula urna. Nullam eu tincidunt est. Duis rhoncus libero vel lacus pharetra, non venenatis tellus tincidunt."
 cover: "@/assets/covers/cover1.png"
 coverAlt: "Hero Image"
-published: true
 pinned: true
 seriesId: first-series
 index: 1
