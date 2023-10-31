@@ -11,9 +11,9 @@ export interface Props {
 const { projects } = Astro.props;
 ---
 
-<section class="space-y-4">
+<section class="space-y-8">
   <h2 class="text-2xl font-bold">Projects</h2>
-  <div class="grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3">
+  <div class="grid grid-cols-1 gap-2 md:grid-cols-2">
     {
       projects.map((project) => (
         <div class="flex flex-col justify-between gap-y-2 rounded-lg border bg-card p-6 text-card-foreground shadow-sm">

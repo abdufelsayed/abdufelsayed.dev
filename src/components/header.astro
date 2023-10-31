@@ -2,14 +2,30 @@
 import { Github } from "lucide-preact";
 import { GITHUB_HANDLE, SITE_NAME, X_HANDLE } from "../consts";
 import { buttonVariants } from "@/lib/button-utils";
+
+interface Props {
+  postTitle?: string;
+}
+
+const { postTitle } = Astro.props;
 ---
 
-<div class="fixed inset-x-0 top-0 z-50 border-b bg-background py-3">
-  <div class="mx-auto flex items-center justify-between px-4 md:max-w-5xl">
+<div class="sticky top-0 z-50 border-b bg-neutral-950/75 py-2 backdrop-blur">
+  <div class="mx-auto flex items-center justify-between px-4 md:max-w-3xl">
     <a
       class="text-lg font-extrabold underline-offset-2 hover:underline"
       href="/">{SITE_NAME}</a
     >
+    {
+      postTitle && (
+        <span
+          id="headerTitle"
+          class="hidden truncate px-6 text-sm font-semibold text-muted-foreground"
+        >
+          {postTitle}
+        </span>
+      )
+    }
     <div class="items flex">
       <a
         href=`https://x.com/${X_HANDLE}`
@@ -38,3 +54,15 @@ import { buttonVariants } from "@/lib/button-utils";
     </div>
   </div>
 </div>
+
+<script>
+  window.addEventListener("scroll", (_) => {
+    const title = document.querySelector("#title");
+    const titleRect = title?.getBoundingClientRect();
+    const isInViewport = (titleRect?.top as number) >= -100;
+    const headerTitle = document.querySelector("#headerTitle");
+    isInViewport
+      ? headerTitle?.classList.remove("md:block")
+      : headerTitle?.classList.add("md:block");
+  });
+</script>

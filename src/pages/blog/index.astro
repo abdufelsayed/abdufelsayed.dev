@@ -1,14 +1,40 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
 import BaseLayout from "@/layouts/base-layout.astro";
 import Posts from "@/components/posts.astro";
+import { buttonVariants } from "@/lib/button-utils";
+import { ArrowLeft } from "lucide-preact";
+import { cn } from "@/lib/utils";
 
 const posts = (await getCollection("blog"))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
   .filter((post) => !post.data.planned && post.data.published);
+
+const sortedPostsByYear = new Map<number, CollectionEntry<"blog">[]>();
+
+posts.forEach((post) => {
+  const year = post.data.pubDate.getFullYear();
+  if (sortedPostsByYear.has(year)) {
+    sortedPostsByYear.get(year)?.push(post);
+  } else {
+    sortedPostsByYear.set(year, [post]);
+  }
+});
 ---
 
 <BaseLayout title="All posts">
-  <h1 class="pb-4 text-3xl">All Posts</h1>
-  <Posts posts={posts} />
+  <div class="container mx-auto max-w-3xl px-4">
+    <a
+      href="/"
+      class={cn(
+        buttonVariants({ variant: "outline", size: "sm" }),
+        "not-prose space-x-1 mb-6"
+      )}
+    >
+      <ArrowLeft class="h-4 w-4" />
+      <span>Back</span>
+    </a>
+    <h1 class="pb-4 text-3xl">All Posts</h1>
+    <Posts posts={sortedPostsByYear} />
+  </div>
 </BaseLayout>

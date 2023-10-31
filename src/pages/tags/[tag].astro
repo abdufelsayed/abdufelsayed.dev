@@ -1,7 +1,10 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
 import BaseLayout from "@/layouts/base-layout.astro";
 import Posts from "@/components/posts.astro";
+import { cn } from "@/lib/utils";
+import { buttonVariants } from "@/lib/button-utils";
+import { ArrowLeft } from "lucide-preact";
 
 export async function getStaticPaths() {
   const posts = (await getCollection("blog")).filter(
@@ -18,11 +21,34 @@ const { tag: t } = Astro.params;
 const posts = (await getCollection("blog"))
   .filter((post) => post.data.tags.includes(`#${t}`))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const sortedPostsByYear = new Map<number, CollectionEntry<"blog">[]>();
+
+posts.forEach((post) => {
+  const year = post.data.pubDate.getFullYear();
+  if (sortedPostsByYear.has(year)) {
+    sortedPostsByYear.get(year)?.push(post);
+  } else {
+    sortedPostsByYear.set(year, [post]);
+  }
+});
 ---
 
 <BaseLayout title={`Posts about #${t}`}>
-  <h1 class="pb-4 text-3xl">
-    {`#${t}`}
-  </h1>
-  <Posts posts={posts} />
+  <div class="container mx-auto max-w-3xl px-4">
+    <a
+      href="/"
+      class={cn(
+        buttonVariants({ variant: "outline", size: "sm" }),
+        "not-prose space-x-1 mb-6"
+      )}
+    >
+      <ArrowLeft class="h-4 w-4" />
+      <span>Back</span>
+    </a>
+    <h1 class="pb-4 text-3xl">
+      {`#${t}`}
+    </h1>
+    <Posts posts={sortedPostsByYear} />
+  </div>
 </BaseLayout>

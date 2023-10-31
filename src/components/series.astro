@@ -9,7 +9,7 @@ export interface Props {
 const { seriesList } = Astro.props;
 ---
 
-<section class="grid grid-cols-1 md:grid-cols-2">
+<section class="flex flex-col gap-y-4">
   {
     seriesList.map(async (series) => {
       const posts = (await getCollection("blog"))

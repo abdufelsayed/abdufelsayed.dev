@@ -6,24 +6,25 @@ import Footer from "@/components/footer.astro";
 
 export interface Props {
   title?: string;
-  description?: string;
-  postMeta?: {
-    pubDate: Date;
-    tags: string[];
+  postData?: {
+    title?: string;
+    description?: string;
+    pubDate?: Date;
+    tags?: string[];
   };
 }
 
-const { title, description, postMeta } = Astro.props;
+const { title, postData } = Astro.props;
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
   <head>
-    <BaseHead title={title} description={description} postMeta={postMeta} />
+    <BaseHead postData={postData} title={title} />
   </head>
-  <body class="relative flex h-screen flex-col justify-between space-y-10">
-    <Header />
-    <main class="container mx-auto grow px-4 pt-16 md:max-w-5xl">
+  <body class="flex min-h-screen flex-col space-y-10">
+    <Header postTitle={postData?.title} />
+    <main class="flex flex-grow justify-center">
       <slot />
     </main>
     <Footer />

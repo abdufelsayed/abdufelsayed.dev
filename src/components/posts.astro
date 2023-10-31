@@ -1,49 +1,47 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import FormattedDate from "./formatted-date.astro";
 
 export interface Props {
-  posts: CollectionEntry<"blog">[];
+  posts: Map<number, CollectionEntry<"blog">[]>;
 }
+
+const months = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
 
 const { posts } = Astro.props;
 ---
 
-<section class="grid grid-cols-1 gap-2 md:grid-cols-2">
+<div>
   {
-    posts.map((post) => (
-      <a
-        href={!post.data.planned ? `/blog/${post.slug}` : null}
-        class="relative isolate flex h-72 flex-col rounded-lg border text-card-foreground shadow-sm hover:bg-muted"
-      >
-        <img
-          src={post.data.cover?.src}
-          alt={post.data.title}
-          class="absolute inset-0 h-full w-full rounded-lg object-cover"
-        />
-        <div
-          class="z-10 flex h-full flex-col justify-end space-y-1 rounded-lg bg-gradient-to-t from-background
-                  via-background/80
-                  to-background/20
-                  p-4
-                  hover:from-background/40
-                  hover:via-background/40
-                  hover:to-background/40"
-        >
-          <h3 class="text-xl font-semibold leading-none tracking-tight">
-            {post.data.title}
-          </h3>
-          <FormattedDate
-            className="text-muted-foreground"
-            date={post.data.pubDate}
-          />
-          <div class="flex flex-wrap gap-x-2 text-sm text-muted-foreground">
-            {post.data.tags.map((tag: string) => (
-              <span>{tag}</span>
-            ))}
-          </div>
-        </div>
-      </a>
-    ))
+    [...posts.keys()].map((year) => {
+      return (
+        <>
+          <h3 class="my-4 text-lg font-semibold">{year}</h3>
+          {posts.get(year)?.map((post) => (
+            <a
+              href={`blog/${post.slug}`}
+              class="flex space-x-6 whitespace-nowrap rounded-md px-6 py-4 hover:bg-muted"
+            >
+              <span class="text-muted-foreground">{`${post.data.pubDate.getDay()} ${
+                months[post.data.pubDate.getMonth()]
+              }`}</span>
+              <span class="truncate">{post.data.title}</span>
+            </a>
+          ))}
+        </>
+      );
+    })
   }
-</section>
+</div>

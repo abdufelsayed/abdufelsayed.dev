@@ -8,16 +8,17 @@ import {
 
 export interface Props {
   title?: string;
-  description?: string;
-  postMeta?: {
-    pubDate: Date;
-    tags: string[];
+  postData?: {
+    title?: string;
+    description?: string;
+    pubDate?: Date;
+    tags?: string[];
   };
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
-const { title, description, postMeta } = Astro.props;
+const { title, postData } = Astro.props;
 
 function getTitle(title?: string) {
   return title ? `${title} | ${SITE_NAME}` : SITE_TITLE;
@@ -28,13 +29,12 @@ function getDescription(description?: string) {
 }
 
 function getOgImage({
-  title,
-  postMeta,
+  postData,
 }: {
-  title?: string;
-  postMeta?: {
-    pubDate: Date;
-    tags: string[];
+  postData?: {
+    title?: string;
+    pubDate?: Date;
+    tags?: string[];
   };
 }) {
   const encode = (str: string) => encodeURIComponent(encodeURIComponent(str));
@@ -48,10 +48,12 @@ function getOgImage({
 
     // TITLE
     `l_text:Roboto_72_bold:${encode(
-      title && title !== "404: Not found" ? title : SITE_TITLE
+      postData?.title && postData?.title !== "404: Not found"
+        ? postData?.title
+        : SITE_TITLE
     )},co_rgb:f8fafc,c_fit,w_1400,h_240`,
     // Positioning
-    `fl_layer_apply,g_south_west,x_150,y_${postMeta ? "170" : "230"}`,
+    `fl_layer_apply,g_south_west,x_150,y_${postData ? "170" : "230"}`,
 
     // PROFILE IMAGE
     `l_abdllahdev`,
@@ -61,18 +63,18 @@ function getOgImage({
     `fl_layer_apply,w_180,g_north_west,x_150,y_100`,
   ];
 
-  if (postMeta) {
+  if (postData && postData.pubDate && postData.tags) {
     const meta = ["abdllah.dev"];
 
     meta.push(
-      postMeta.pubDate.toLocaleDateString("en-gb", {
+      postData.pubDate.toLocaleDateString("en-gb", {
         year: "numeric",
         month: "short",
         day: "numeric",
       })
     );
 
-    meta.push(...postMeta.tags);
+    meta.push(...postData.tags);
 
     return url
       .concat([
@@ -119,21 +121,27 @@ function getOgImage({
 <link rel="canonical" href={canonicalURL} />
 
 <!-- Primary Meta Tags -->
-<title>{getTitle(title)}</title>
-<meta name="title" content={getTitle(title)} />
-<meta name="description" content={getDescription(description)} />
+<title>{getTitle(title || postData?.title)}</title>
+<meta name="title" content={getTitle(title || postData?.title)} />
+<meta name="description" content={getDescription(postData?.description)} />
 <meta name="author" content={SITE_AUTHOR} />
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="website" />
 <meta property="og:url" content={Astro.url} />
-<meta property="og:title" content={getTitle(title)} />
-<meta property="og:description" content={getDescription(description)} />
-<meta property="og:image" content={getOgImage({ title, postMeta })} />
+<meta property="og:title" content={getTitle(title || postData?.title)} />
+<meta
+  property="og:description"
+  content={getDescription(postData?.description)}
+/>
+<meta property="og:image" content={getOgImage({ postData })} />
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image" />
 <meta property="twitter:url" content={Astro.url} />
-<meta property="twitter:title" content={getTitle(title)} />
-<meta property="twitter:description" content={getDescription(description)} />
-<meta property="twitter:image" content={getOgImage({ title, postMeta })} />
+<meta property="twitter:title" content={getTitle(title || postData?.title)} />
+<meta
+  property="twitter:description"
+  content={getDescription(postData?.description)}
+/>
+<meta property="twitter:image" content={getOgImage({ postData })} />

@@ -42,13 +42,9 @@ const posts = (await getCollection("blog"))
   .sort((a, b) => (a.data.index as number) - (b.data.index as number));
 ---
 
-<BaseLayout
-  title={title}
-  description={description}
-  postMeta={{ pubDate, tags }}
->
+<BaseLayout postData={{ title, description, pubDate, tags }}>
   <div
-    class="prose max-w-none prose-headings:scroll-my-20 prose-a:no-underline prose-a:decoration-blue-600 prose-a:underline-offset-2 hover:prose-a:underline prose-code:rounded-sm prose-code:bg-muted prose-code:px-1 prose-code:py-0.5 prose-code:before:hidden prose-code:after:hidden prose-img:rounded-lg prose-img:border"
+    class="container prose mx-auto max-w-3xl px-4 prose-headings:scroll-my-20 prose-a:no-underline prose-a:decoration-blue-600 prose-a:underline-offset-2 hover:prose-a:underline prose-code:rounded-sm prose-code:bg-muted prose-code:px-1 prose-code:py-0.5 prose-code:before:hidden prose-code:after:hidden prose-img:rounded-lg prose-img:border"
   >
     <a
       href="/"
@@ -61,7 +57,7 @@ const posts = (await getCollection("blog"))
       <span>Back</span>
     </a>
     <div class="space-y-2">
-      <h1>{title}</h1>
+      <h1 id="title">{title}</h1>
       <div
         class="space-y-2 text-xs font-semibold uppercase text-muted-foreground"
       >
@@ -82,7 +78,7 @@ const posts = (await getCollection("blog"))
           <span>{"•"}</span>
           <span>{readingTime}</span>
         </div>
-        <div class="not-prose flex items-center space-x-1">
+        <div class="not-prose flex flex-wrap items-center gap-1">
           {
             tags.map((tag: string) => (
               <a
@@ -117,15 +113,6 @@ const posts = (await getCollection("blog"))
           <slot />
         </article>
       </div>
-      {
-        headings.length > 0 && (
-          <nav class="sticky top-20 z-40 mt-9 hidden h-screen space-y-2 text-sm lg:block lg:w-4/12">
-            <span class="font-black uppercase">On This Page</span>
-            <TableOfContent headings={headings} />
-            <div class="border-b-[1px]" />
-          </nav>
-        )
-      }
     </div>
   </div>
 

@@ -1,18 +1,27 @@
 ---
 import BaseLayout from "@/layouts/base-layout.astro";
 import Projects from "@/components/projects.astro";
-import { getCollection } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
 
 import Posts from "@/components/posts.astro";
+import PinnedPosts from "@/components/pinned-posts.astro";
 import SeriesList from "@/components/series.astro";
 import Intro from "@/components/intro.astro";
 
-const posts = await getCollection("blog");
-
-const sortedPosts = posts
+const posts = (await getCollection("blog"))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-  .filter((post) => !post.data.planned && post.data.published)
-  .slice(0, 2);
+  .filter((post) => !post.data.planned && post.data.published);
+
+const sortedPostsByYear = new Map<number, CollectionEntry<"blog">[]>();
+
+posts.slice(0, 3).forEach((post) => {
+  const year = post.data.pubDate.getFullYear();
+  if (sortedPostsByYear.has(year)) {
+    sortedPostsByYear.get(year)?.push(post);
+  } else {
+    sortedPostsByYear.set(year, [post]);
+  }
+});
 
 const pinnedPosts = posts.filter(
   (post) => post.data.pinned && post.data.published
@@ -27,65 +36,16 @@ const sortedProjects = projects.sort((a, b) => a.data.index - b.data.index);
 ---
 
 <BaseLayout>
-  <div class="space-y-10">
+  <div class="container mx-auto max-w-3xl space-y-10 px-4">
     <Intro />
+
     <Projects projects={sortedProjects} />
 
-    <!-- <div class="space-y-2">
-      <h3 class="text-2xl font-bold">Too many posts coming soon!</h3>
-      <p>
-        I've been trying to start writing but I can't find cool ideas but I will
-        start writing about some cool stuff soon.
-      </p>
-    </div> -->
-
-    {
-      pinnedPosts.length > 0 && (
-        <div class="space-y-4">
-          <div class="flex items-end justify-between">
-            <h2 class="text-2xl font-bold">Pinned Posts</h2>
-            <a
-              href="/blog"
-              class="text-sm font-medium underline-offset-2 hover:underline"
-            >
-              View all
-            </a>
-          </div>
-          <Posts posts={pinnedPosts} />
-        </div>
-      )
-    }
-
-    <div class="space-y-4">
-      <div class="flex items-end justify-between">
-        <h2 class="text-2xl font-bold">Latest Posts</h2>
-        {
-          sortedPosts.length > 0 && (
-            <a
-              href="/blog"
-              class="text-sm font-medium underline-offset-2 hover:underline"
-            >
-              View all
-            </a>
-          )
-        }
-      </div>
-      {
-        sortedPosts.length > 0 ? (
-          <Posts posts={sortedPosts} />
-        ) : (
-          <p class="font-semibold">
-            Sorry, I lied 😅 there is no posts yet on this blog but I'm
-            currently working 👷‍♂️ on a tutorial series called "Lambda Calculus
-            For All". Stay Tuned 😄!
-          </p>
-        )
-      }
-    </div>
+    {pinnedPosts.length > 0 && <PinnedPosts posts={pinnedPosts} />}
 
     {
       pinnedSeries.length > 0 && (
-        <div class="space-y-5">
+        <div class="space-y-8">
           <div class="flex items-end justify-between">
             <h2 class="text-2xl font-bold">Pinned Series</h2>
             <a
@@ -99,5 +59,32 @@ const sortedProjects = projects.sort((a, b) => a.data.index - b.data.index);
         </div>
       )
     }
+
+    <div class="space-y-8">
+      <div class="flex items-end justify-between">
+        <h2 class="text-2xl font-bold">Latest Posts</h2>
+        {
+          posts.length > 0 && (
+            <a
+              href="/blog"
+              class="text-sm font-medium underline-offset-2 hover:underline"
+            >
+              View all
+            </a>
+          )
+        }
+      </div>
+      {
+        posts.length > 0 ? (
+          <Posts posts={sortedPostsByYear} />
+        ) : (
+          <p class="font-semibold">
+            Sorry, I lied 😅 there is no posts yet on this blog but I'm
+            currently working 👷‍♂️ on a tutorial series called "Lambda Calculus
+            For All". Stay Tuned 😄!
+          </p>
+        )
+      }
+    </div>
   </div>
 </BaseLayout>
