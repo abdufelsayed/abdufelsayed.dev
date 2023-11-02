@@ -2,11 +2,11 @@
 import { getCollection, type CollectionEntry } from "astro:content";
 import FormattedDate from "@/components/formatted-date.astro";
 import BaseLayout from "@/layouts/base-layout.astro";
-import TableOfContent from "@/components/toc.astro";
 import { SeriesAccordion } from "@/components/series-accordion";
 import { buttonVariants } from "@/lib/button-utils";
 import { ArrowLeft } from "lucide-preact";
 import { cn } from "@/lib/utils";
+import { Toc } from "@/components/toc";
 
 type Blog = CollectionEntry<"blog">["data"];
 
@@ -43,75 +43,83 @@ const posts = (await getCollection("blog"))
 ---
 
 <BaseLayout postData={{ title, description, pubDate, tags }}>
-  <div
-    class="container prose mx-auto max-w-3xl px-4 prose-headings:scroll-my-20 prose-a:no-underline prose-a:decoration-blue-600 prose-a:underline-offset-2 hover:prose-a:underline prose-code:rounded-sm prose-code:bg-muted prose-code:px-1 prose-code:py-0.5 prose-code:before:hidden prose-code:after:hidden prose-img:rounded-lg prose-img:border"
-  >
-    <a
-      href="/"
-      class={cn(
-        buttonVariants({ variant: "outline", size: "sm" }),
-        "not-prose space-x-1 mb-6"
-      )}
-    >
-      <ArrowLeft class="h-4 w-4" />
-      <span>Back</span>
-    </a>
-    <div class="space-y-2">
-      <h1 id="title">{title}</h1>
-      <div
-        class="space-y-2 text-xs font-semibold uppercase text-muted-foreground"
-      >
-        <div class="flex flex-wrap items-center space-x-1">
-          <span>
-            Published on <FormattedDate date={pubDate} />
-          </span>
-          {
-            updatedDate && (
-              <>
-                <span>{"•"}</span>
-                <span>
-                  Updated on <FormattedDate date={updatedDate} />
-                </span>
-              </>
-            )
-          }
-          <span>{"•"}</span>
-          <span>{readingTime}</span>
-        </div>
-        <div class="not-prose flex flex-wrap items-center gap-1">
-          {
-            tags.map((tag: string) => (
-              <a
-                href={`/tags/${tag.slice(1)}`}
-                class="rounded-md border bg-card p-1 px-2 lowercase text-foreground hover:bg-muted"
-              >
-                {tag}
-              </a>
-            ))
-          }
-        </div>
+  <div class="relative">
+    <div class="fixed left-0 top-0 hidden h-screen w-1/4 px-16 lg:block">
+      <div class="absolute top-1/2 h-2/3 -translate-y-1/2 transform">
+        {headings && <Toc headings={headings} client:load />}
       </div>
-      <p class="lead">
-        {description}
-      </p>
     </div>
-    <div class="space-x-10 md:flex">
-      <div class="w-full">
-        <div class="not-prose my-10">
-          {
-            series && (
-              <SeriesAccordion
-                series={series}
-                posts={posts}
-                current={index}
-                client:idle
-              />
-            )
-          }
+
+    <div
+      class="prose max-w-3xl px-4 prose-headings:scroll-my-20 prose-a:no-underline prose-a:decoration-blue-600 prose-a:underline-offset-2 prose-code:rounded-sm prose-code:bg-muted prose-code:px-1 prose-code:py-0.5 prose-code:before:hidden prose-code:after:hidden prose-img:rounded-lg prose-img:border hover:prose-a:underline"
+    >
+      <a
+        href="/"
+        class={cn(
+          buttonVariants({ variant: "outline", size: "sm" }),
+          "not-prose space-x-1 mb-6"
+        )}
+      >
+        <ArrowLeft class="h-4 w-4" />
+        <span>Home</span>
+      </a>
+      <div class="space-y-2">
+        <h1 id="title">{title}</h1>
+        <div
+          class="space-y-2 text-xs font-semibold uppercase text-muted-foreground"
+        >
+          <div class="flex flex-wrap items-center space-x-1">
+            <span>
+              Published on <FormattedDate date={pubDate} />
+            </span>
+            {
+              updatedDate && (
+                <>
+                  <span>{"•"}</span>
+                  <span>
+                    Updated on <FormattedDate date={updatedDate} />
+                  </span>
+                </>
+              )
+            }
+            <span>{"•"}</span>
+            <span>{readingTime}</span>
+          </div>
+          <div class="not-prose flex flex-wrap items-center gap-1">
+            {
+              tags.map((tag: string) => (
+                <a
+                  href={`/tags/${tag.slice(1)}`}
+                  class="rounded-md border bg-card p-1 px-2 lowercase text-foreground hover:bg-muted"
+                >
+                  {tag}
+                </a>
+              ))
+            }
+          </div>
         </div>
-        <article>
-          <slot />
-        </article>
+        <p class="lead">
+          {description}
+        </p>
+      </div>
+      <div class="space-x-10 md:flex">
+        <div class="w-full">
+          <div class="not-prose my-10">
+            {
+              series && (
+                <SeriesAccordion
+                  series={series}
+                  posts={posts}
+                  current={index}
+                  client:idle
+                />
+              )
+            }
+          </div>
+          <article>
+            <slot />
+          </article>
+        </div>
       </div>
     </div>
   </div>

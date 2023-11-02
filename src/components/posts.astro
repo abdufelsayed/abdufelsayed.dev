@@ -32,7 +32,7 @@ const { posts } = Astro.props;
           {posts.get(year)?.map((post) => (
             <a
               href={`blog/${post.slug}`}
-              class="flex space-x-6 whitespace-nowrap rounded-md px-6 py-4 hover:bg-muted"
+              class="flex space-x-6 whitespace-nowrap rounded-lg px-6 py-4 hover:bg-muted"
             >
               <span class="text-muted-foreground">{`${post.data.pubDate.getDay()} ${
                 months[post.data.pubDate.getMonth()]
