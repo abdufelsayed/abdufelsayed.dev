@@ -20,8 +20,8 @@ const seriesList = (await getCollection("series")).filter(
         "not-prose space-x-1 mb-6"
       )}
     >
-      <ArrowLeft class="h-4 w-4" />
-      <span>Home</span>
+      <ArrowLeft class="h-3.5 w-3.5" />
+      <span class="text-sm">Home</span>
     </a>
     <h1 class="pb-10 text-4xl text-black dark:text-white">All Series</h1>
     <SeriesList seriesList={seriesList} />
