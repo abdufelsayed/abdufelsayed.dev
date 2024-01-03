@@ -1,6 +1,7 @@
 ---
-import { Github, Network, Rss } from "lucide-preact";
+import { Github, Linkedin, Network, Rss } from "lucide-preact";
 import { buttonVariants } from "@/lib/button-utils";
+import { GITHUB_HANDLE, LINKEDIN_HANDLE, X_HANDLE } from "@/consts";
 
 const today = new Date();
 ---
@@ -12,12 +13,12 @@ const today = new Date();
     <p class="text-sm">&copy; {today.getFullYear()} Abdullah Elsayed</p>
     <div class="flex items-center">
       <a
-        href="https://x.com/abdllah_dev"
+        href=`https://x.com/${X_HANDLE}`
         target="_blank"
         class={buttonVariants({ variant: "ghost", size: "icon" })}
       >
         <svg
-          class="h-3.5 w-3.5 fill-white"
+          class="h-3.5 w-3.5 fill-foreground"
           role="img"
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
@@ -28,7 +29,15 @@ const today = new Date();
         <span class="sr-only">X</span>
       </a>
       <a
-        href="https://github.com/abdllahdev"
+        href=`https://linkedin.com/in/${LINKEDIN_HANDLE}`
+        target="_blank"
+        class={buttonVariants({ variant: "ghost", size: "icon" })}
+      >
+        <Linkedin class="h-3.5 w-3.5" />
+        <span class="sr-only">LinkedIn</span>
+      </a>
+      <a
+        href=`https://linkedin.com/in/${GITHUB_HANDLE}`
         target="_blank"
         class={buttonVariants({ variant: "ghost", size: "icon" })}
       >

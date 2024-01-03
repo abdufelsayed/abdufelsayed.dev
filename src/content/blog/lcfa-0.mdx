@@ -1,0 +1,117 @@
+---
+slug: lambda-calculus-for-all-part-0-church-booleans
+title: "Lambda Calculus For All: Part 0 - Church Booleans"
+description: "A motivation tutorial for lambda calculus"
+index: 1
+pubDate: "05 Oct 2023"
+pinned: true
+isWorkInProgress: true
+published: true
+seriesId: lcfa
+cover: "@/assets/covers/lcfa-0.png"
+tags:
+  - lambda-calculus
+  - type-theory
+  - functional-programming
+---
+
+import { CodeWidget } from "@/components/code-widget";
+
+If you are reading this post you are probably a programmer. You might be a
+beginner or a professional but most likely you are an imperative programmer. In
+this post, I&apos;m not going to use any weird greek symbols that mathematicians
+and computer scientists love to use but I will mostly focus on motivating you
+why lambda calculus is interested to learn about and how it is important.
+
+## The story
+
+Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
+Ipsum has been the industry's standard dummy text ever since the 1500s, when an
+unknown printer took a galley of type and scrambled it to make a type specimen
+book. It has survived not only five centuries, but also the leap into electronic
+typesetting, remaining essentially unchanged. It was popularised in the 1960s
+with the release of Letraset sheets containing Lorem Ipsum passages, and more
+recently with desktop publishing software like Aldus PageMaker including
+versions of Lorem Ipsum.
+
+{/* prettier-ignore-start */}
+
+export const ocamlCode = `
+type 'a boolean = 'a -> 'a -> 'a
+
+let true' : 'a boolean = fun t _ -> t
+let false' : 'a boolean = fun _ f -> f
+
+let ( && ) (x : 'a boolean) (y : 'a boolean) : 'a boolean =
+  fun t f -> x (y t f) f
+
+let ( || ) (x : 'a boolean) (y : 'a boolean) : 'a boolean =
+  fun t f -> x t (y t f)
+
+let ( ! ) (x : 'a boolean) : 'a boolean = fun t f -> x f t
+`;
+
+export const tsCode = `
+export type Bool<T> = (x: T, y: T) => T;
+
+export const _true = <T>(t: T, _f: T) => t;
+export const _false = <T>(_t: T, f: T) => f;
+
+export const and =
+  <T>(x: Bool<T>, y: Bool<T>) =>
+  (t: T, f: T) =>
+    x(y(t, f), f);
+
+export const or =
+  <T>(x: Bool<T>, y: Bool<T>) =>
+  (t: T, f: T) =>
+    x(t, y(t, f));
+
+export const not =
+  <T>(x: Bool<T>) =>
+  (t: T, f: T) =>
+    x(f, t);
+`;
+
+{/* prettier-ignore-end */}
+
+export const ocamlSnippet = {
+  lang: "ocaml",
+  title: "main.ml",
+  linesToHighlight: [9, 10],
+  code: ocamlCode,
+};
+
+export const tsSnippet = {
+  lang: "typescript",
+  title: "index.ts",
+  code: tsCode,
+};
+
+export const snippets = [ocamlSnippet, tsSnippet];
+
+<CodeWidget snippets={snippets} client:load />
+
+## Why do we use it?
+
+It is a long established fact that a reader will be distracted by the readable
+content of a page when looking at its layout. The point of using Lorem Ipsum is
+that it has a more-or-less normal distribution of letters, as opposed to using
+'Content here, content here', making it look like readable English. Many desktop
+publishing packages and web page editors now use Lorem Ipsum as their default
+model text, and a search for 'lorem ipsum' will uncover many web sites still in
+their infancy. Various versions have evolved over the years, sometimes by
+accident, sometimes on purpose (injected humour and the like).
+
+## Where does it come from?
+
+Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots
+in a piece of classical Latin literature from 45 BC, making it over 2000 years
+old. Richard McClintock, a Latin professor at Hampden-Sydney College in
+Virginia, looked up one of the more obscure Latin words, consectetur, from a
+Lorem Ipsum passage, and going through the cites of the word in classical
+literature, discovered the undoubtable source. Lorem Ipsum comes from sections
+1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and
+Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of
+ethics, very popular during the Renaissance. The first line of Lorem Ipsum,
+"Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.

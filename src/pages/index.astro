@@ -1,6 +1,5 @@
 ---
 import BaseLayout from "@/layouts/base-layout.astro";
-import Projects from "@/components/projects.astro";
 import { getCollection, type CollectionEntry } from "astro:content";
 
 import Posts from "@/components/posts.astro";
@@ -30,18 +29,11 @@ const pinnedPosts = posts.filter(
 const pinnedSeries = (await getCollection("series")).filter(
   (s) => s.data.pinned && s.data.published
 );
-
-const projects = (await getCollection("project")).filter(
-  (p) => p.data.published
-);
-const sortedProjects = projects.sort((a, b) => a.data.index - b.data.index);
 ---
 
 <BaseLayout>
   <div class="container mx-auto max-w-3xl space-y-10 px-4">
     <Intro />
-
-    <Projects projects={sortedProjects} />
 
     {pinnedPosts.length > 0 && <PinnedPosts posts={pinnedPosts} />}
 

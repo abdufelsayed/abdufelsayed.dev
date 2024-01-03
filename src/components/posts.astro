@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import Pill from "@/components/pill.astro";
 
 export interface Props {
   posts: Map<number, CollectionEntry<"blog">[]>;
@@ -32,12 +33,18 @@ const { posts } = Astro.props;
           {posts.get(year)?.map((post) => (
             <a
               href={`blog/${post.slug}`}
-              class="flex space-x-6 whitespace-nowrap rounded-lg px-6 py-4 hover:bg-muted"
+              class="flex justify-between whitespace-nowrap rounded-lg px-6 py-4 hover:bg-muted"
             >
-              <span class="text-muted-foreground">{`${post.data.pubDate.getDay()} ${
-                months[post.data.pubDate.getMonth()]
-              }`}</span>
-              <span class="truncate">{post.data.title}</span>
+              <div class="flex space-x-6">
+                <span class="text-muted-foreground">{`${post.data.pubDate.getDay()} ${
+                  months[post.data.pubDate.getMonth()]
+                }`}</span>
+                <span class="truncate">{post.data.title}</span>
+              </div>
+
+              {post.data.isWorkInProgress && (
+                <Pill variant="warning" content="Work in Progress" />
+              )}
             </a>
           ))}
         </>

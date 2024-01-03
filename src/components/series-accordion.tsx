@@ -2,6 +2,7 @@ import type { CollectionEntry } from "astro:content";
 import { useState } from "preact/hooks";
 import { ChevronDown, ChevronUp } from "lucide-preact";
 import { cn } from "@/lib/utils";
+import Pill from "@/components/pill.astro";
 
 interface Props {
   series: CollectionEntry<"series">;
@@ -24,7 +25,7 @@ export function SeriesAccordion({ series, posts, current }: Props) {
         })}
         onClick={handleOnClick}
       >
-        <div class="flex items-center justify-between text-black dark:text-white">
+        <div class="flex items-center justify-between">
           <div class="flex items-center space-x-2">
             <h3 class="text-xl font-semibold leading-none tracking-tight">
               {series.data.title}
@@ -68,9 +69,7 @@ export function SeriesAccordion({ series, posts, current }: Props) {
               >
                 <span>{post.data.title}</span>
                 {post.data.planned && (
-                  <span class="inline-flex items-center justify-center rounded-full bg-yellow-400 p-0.5 px-2 text-xs text-black">
-                    Planned
-                  </span>
+                  <Pill variant="warning" content="Planned" />
                 )}
               </a>
             </li>

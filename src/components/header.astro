@@ -1,7 +1,8 @@
 ---
-import { Github } from "lucide-preact";
-import { GITHUB_HANDLE, SITE_NAME, X_HANDLE } from "../consts";
 import { buttonVariants } from "@/lib/button-utils";
+import { GITHUB_HANDLE, LINKEDIN_HANDLE, SITE_NAME, X_HANDLE } from "../consts";
+import { cn } from "@/lib/utils";
+import { Github, Linkedin, Rss } from "lucide-preact";
 
 interface Props {
   postTitle?: string;
@@ -28,31 +29,12 @@ const { postTitle } = Astro.props;
         </span>
       )
     }
-    <div class="items flex">
+    <div class="flex">
       <a
-        href=`https://x.com/${X_HANDLE}`
-        target="_blank"
-        class={buttonVariants({ variant: "ghost", size: "icon" })}
+        class={cn(buttonVariants({ variant: "link" }), "cursor-pointer")}
+        href="https://resume.abdllah.dev"
+        target="_blank">Resume</a
       >
-        <svg
-          class="h-3.5 w-3.5 fill-white"
-          role="img"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-          ><title>X</title><path
-            d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"
-          ></path></svg
-        >
-        <span class="sr-only">X</span>
-      </a>
-      <a
-        href=`https://github.com/${GITHUB_HANDLE}`
-        target="_blank"
-        class={buttonVariants({ variant: "ghost", size: "icon" })}
-      >
-        <Github class="h-3.5 w-3.5" />
-        <span class="sr-only">GitHub</span>
-      </a>
     </div>
   </div>
 </div>

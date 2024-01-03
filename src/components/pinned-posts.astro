@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import FormattedDate from "./formatted-date.astro";
+import FormattedDate from "@/components/formatted-date.astro";
+import Pill from "@/components/pill.astro";
 
 export interface Props {
   posts: CollectionEntry<"blog">[];
@@ -25,7 +26,7 @@ const { posts } = Astro.props;
             class="absolute inset-0 h-full w-full rounded-lg object-cover"
           />
           <div
-            class="z-10 flex h-full flex-col justify-end space-y-1 rounded-lg bg-gradient-to-t from-background via-background/80
+            class="z-10 flex h-full flex-col justify-end space-y-2 rounded-lg bg-gradient-to-t from-background via-background/80
                     to-background/20
                     p-4
                     hover:from-background/60
@@ -35,10 +36,17 @@ const { posts } = Astro.props;
             <h3 class="text-xl font-semibold leading-none tracking-tight">
               {post.data.title}
             </h3>
-            <FormattedDate
-              className="text-muted-foreground"
-              date={post.data.pubDate}
-            />
+
+            <div class="flex space-x-2">
+              <FormattedDate
+                className="text-muted-foreground"
+                date={post.data.pubDate}
+              />
+              {post.data.isWorkInProgress && (
+                <Pill variant="warning" content="Work in Progress" />
+              )}
+            </div>
+
             <div class="flex flex-wrap gap-x-2 text-sm text-muted-foreground">
               {post.data.tags.map((tag: string) => (
                 <span>{tag}</span>
@@ -50,3 +58,7 @@ const { posts } = Astro.props;
     }
   </div>
 </section>
+
+<script is:inline>
+  const isDark = document.documentElement.classList.contains("dark");
+</script>

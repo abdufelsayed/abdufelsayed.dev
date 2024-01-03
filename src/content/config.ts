@@ -18,6 +18,7 @@ const blog = defineCollection({
         .array()
         .transform((tags) => tags.map((tag) => `#${tag.toLowerCase()}`)),
       published: z.boolean().default(false),
+      isWorkInProgress: z.boolean().default(false),
       pinned: z.boolean().default(false),
       planned: z.boolean().default(false),
       seriesId: z.string().optional(),

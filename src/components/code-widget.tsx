@@ -85,7 +85,7 @@ export function CodeWidget({ snippets }: CodeWidgetProps) {
           },
           line({ className, children, index }) {
             return `
-              <line 
+              <line
                 before=${index + 1}
                 class="${cn(
                   "inline-flex w-full py-0.5 border-transparent border-l-4 before:pl-3 before:pr-4 before:w-10 before:text-muted-foreground before:content-[attr(before)]",

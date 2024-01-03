@@ -5,3 +5,4 @@ export const SITE_DESCRIPTION =
 export const SITE_AUTHOR = "Abdullah Elsayed (@abdllahdev)";
 export const X_HANDLE = "abdllah_dev";
 export const GITHUB_HANDLE = "abdllahdev";
+export const LINKEDIN_HANDLE = "abdllahdev";
