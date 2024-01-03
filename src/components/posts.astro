@@ -24,7 +24,7 @@ const months = [
 const { posts } = Astro.props;
 ---
 
-<div>
+<>
   {
     [...posts.keys()].map((year) => {
       return (
@@ -33,22 +33,37 @@ const { posts } = Astro.props;
           {posts.get(year)?.map((post) => (
             <a
               href={`blog/${post.slug}`}
-              class="flex justify-between whitespace-nowrap rounded-lg px-6 py-4 hover:bg-muted"
+              class="flex w-full justify-between rounded-lg px-2 py-4 hover:bg-muted md:px-6"
             >
-              <div class="flex space-x-6">
-                <span class="text-muted-foreground">{`${post.data.pubDate.getDay()} ${
+              <div class=" hidden space-x-4 md:flex">
+                <span class=" whitespace-nowrap text-muted-foreground ">{`${post.data.pubDate.getDay()} ${
                   months[post.data.pubDate.getMonth()]
                 }`}</span>
-                <span class="truncate">{post.data.title}</span>
+                <span>{post.data.title}</span>
               </div>
 
               {post.data.isWorkInProgress && (
-                <Pill variant="warning" content="Work in Progress" />
+                <div class="hidden md:block">
+                  <Pill variant="warning" content="Work in Progress" />
+                </div>
               )}
+
+              <div class="flex  flex-col md:hidden">
+                <span>{post.data.title}</span>
+
+                <div class="flex items-center justify-between">
+                  <span class="whitespace-nowrap text-muted-foreground">{`${post.data.pubDate.getDay()} ${
+                    months[post.data.pubDate.getMonth()]
+                  }`}</span>
+                  {post.data.isWorkInProgress && (
+                    <Pill variant="warning" content="Work in Progress" />
+                  )}
+                </div>
+              </div>
             </a>
           ))}
         </>
       );
     })
   }
-</div>
+</>

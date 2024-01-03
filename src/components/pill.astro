@@ -10,7 +10,7 @@ const { content, variant } = Astro.props;
 
 <span
   class={cn(
-    "inline-flex items-center justify-center rounded-full px-2 text-xs font-semibold",
+    "inline-flex items-center justify-center rounded-full py-0.5 px-1.5 text-xs font-semibold whitespace-nowrap",
     {
       "bg-primary": variant === "primary",
       "bg-amber-500 text-black": variant === "warning",
