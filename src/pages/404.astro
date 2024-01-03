@@ -14,12 +14,11 @@ import { ArrowLeft } from "lucide-preact";
     <a
       href="/"
       class={cn(
-        buttonVariants({ variant: "destructive", size: "sm" }),
-        "space-x-1"
+        buttonVariants({ variant: "link" }),
+        "not-prose space-x-1 mb-6 p-0"
       )}
     >
-      <ArrowLeft class="h-3.5 w-3.5" />
-      <span class="text-sm">Home</span>
+      ← Home
     </a>
   </div>
 </BaseLayout>
