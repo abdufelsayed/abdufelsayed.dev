@@ -1,19 +1,19 @@
 ---
 import {
-  SITE_AUTHOR,
-  SITE_DESCRIPTION,
-  SITE_NAME,
-  SITE_TITLE,
+	SITE_AUTHOR,
+	SITE_DESCRIPTION,
+	SITE_NAME,
+	SITE_TITLE,
 } from "../consts";
 
 export interface Props {
-  title?: string;
-  postData?: {
-    title?: string;
-    description?: string;
-    pubDate?: Date;
-    tags?: string[];
-  };
+	title?: string;
+	postData?: {
+		title?: string;
+		description?: string;
+		pubDate?: Date;
+		tags?: string[];
+	};
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -21,89 +21,89 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const { title, postData } = Astro.props;
 
 function getTitle(title?: string) {
-  return title ? `${title} | ${SITE_NAME}` : SITE_TITLE;
+	return title ? `${title} | ${SITE_NAME}` : SITE_TITLE;
 }
 
 function getDescription(description?: string) {
-  return description ? description : SITE_DESCRIPTION;
+	return description ? description : SITE_DESCRIPTION;
 }
 
 function getOgImage({
-  postData,
+	postData,
 }: {
-  postData?: {
-    title?: string;
-    pubDate?: Date;
-    tags?: string[];
-  };
+	postData?: {
+		title?: string;
+		pubDate?: Date;
+		tags?: string[];
+	};
 }) {
-  const encode = (str: string) => encodeURIComponent(encodeURIComponent(str));
+	const encode = (str: string) => encodeURIComponent(encodeURIComponent(str));
 
-  const url = [
-    // Add your own Cloudinary account ID.
-    `https://res.cloudinary.com/abdllahdev/image/upload`,
+	const url = [
+		// Add your own Cloudinary account ID.
+		`https://res.cloudinary.com/abdllahdev/image/upload`,
 
-    // Composed Image Transformations
-    `w_1920,h_933,q_100`,
+		// Composed Image Transformations
+		`w_1920,h_933,q_100`,
 
-    // TITLE
-    `l_text:Roboto_72_bold:${encode(
-      postData?.title && postData?.title !== "404: Not found"
-        ? postData?.title
-        : SITE_TITLE
-    )},co_rgb:f8fafc,c_fit,w_1400,h_240`,
-    // Positioning
-    `fl_layer_apply,g_south_west,x_150,y_${postData ? "170" : "230"}`,
+		// TITLE
+		`l_text:Roboto_72_bold:${encode(
+			postData?.title && postData?.title !== "404: Not found"
+				? postData?.title
+				: SITE_TITLE,
+		)},co_rgb:f8fafc,c_fit,w_1400,h_240`,
+		// Positioning
+		`fl_layer_apply,g_south_west,x_150,y_${postData ? "170" : "230"}`,
 
-    // PROFILE IMAGE
-    `l_abdllahdev`,
-    // Transformations
-    `c_thumb,r_max,w_380,h_380,q_100`,
-    // Positioning
-    `fl_layer_apply,w_180,g_north_west,x_150,y_100`,
-  ];
+		// PROFILE IMAGE
+		`l_abdllahdev`,
+		// Transformations
+		`c_thumb,r_max,w_380,h_380,q_100`,
+		// Positioning
+		`fl_layer_apply,w_180,g_north_west,x_150,y_100`,
+	];
 
-  if (postData && postData.pubDate && postData.tags) {
-    const meta = ["abdllah.dev"];
+	if (postData?.pubDate && postData.tags) {
+		const meta = ["abdllah.dev"];
 
-    meta.push(
-      postData.pubDate.toLocaleDateString("en-gb", {
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-      })
-    );
+		meta.push(
+			postData.pubDate.toLocaleDateString("en-gb", {
+				year: "numeric",
+				month: "short",
+				day: "numeric",
+			}),
+		);
 
-    meta.push(...postData.tags);
+		meta.push(...postData.tags);
 
-    return url
-      .concat([
-        // META
-        `l_text:Roboto_48:${encode(
-          meta.join(" • ").toLowerCase()
-        )},co_rgb:94a3b8,c_fit,w_1400`,
-        // Positioning
-        `fl_layer_apply,g_south_west,x_150,y_100`,
+		return url
+			.concat([
+				// META
+				`l_text:Roboto_48:${encode(
+					meta.join(" • ").toLowerCase(),
+				)},co_rgb:94a3b8,c_fit,w_1400`,
+				// Positioning
+				`fl_layer_apply,g_south_west,x_150,y_100`,
 
-        // BG Image
-        `og-image.png`,
-      ])
-      .join("/");
-  } else {
-    return url
-      .concat([
-        // META
-        `l_text:Roboto_48:${encode(
-          SITE_DESCRIPTION
-        )},co_rgb:94a3b8,c_fit,w_1400`,
-        // Positioning
-        `fl_layer_apply,g_south_west,x_150,y_100`,
+				// BG Image
+				`og-image.png`,
+			])
+			.join("/");
+	} else {
+		return url
+			.concat([
+				// META
+				`l_text:Roboto_48:${encode(
+					SITE_DESCRIPTION,
+				)},co_rgb:94a3b8,c_fit,w_1400`,
+				// Positioning
+				`fl_layer_apply,g_south_west,x_150,y_100`,
 
-        // BG Image
-        `og-image.png`,
-      ])
-      .join("/");
-  }
+				// BG Image
+				`og-image.png`,
+			])
+			.join("/");
+	}
 }
 ---
 

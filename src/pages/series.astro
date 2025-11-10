@@ -1,13 +1,13 @@
 ---
 import { getCollection } from "astro:content";
-import BaseLayout from "@/layouts/base-layout.astro";
-import SeriesList from "@/components/series.astro";
-import { buttonVariants } from "@/lib/button-utils";
 import { ArrowLeft } from "lucide-preact";
+import SeriesList from "@/components/series.astro";
+import BaseLayout from "@/layouts/base-layout.astro";
+import { buttonVariants } from "@/lib/button-utils";
 import { cn } from "@/lib/utils";
 
 const seriesList = (await getCollection("series")).filter(
-  (s) => s.data.published
+	(s) => s.data.published,
 );
 ---
 

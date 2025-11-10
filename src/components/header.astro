@@ -1,11 +1,11 @@
 ---
-import { buttonVariants } from "@/lib/button-utils";
-import { GITHUB_HANDLE, LINKEDIN_HANDLE, SITE_NAME, X_HANDLE } from "../consts";
-import { cn } from "@/lib/utils";
 import { Github, Linkedin, Rss } from "lucide-preact";
+import { buttonVariants } from "@/lib/button-utils";
+import { cn } from "@/lib/utils";
+import { GITHUB_HANDLE, LINKEDIN_HANDLE, SITE_NAME, X_HANDLE } from "../consts";
 
 interface Props {
-  postTitle?: string;
+	postTitle?: string;
 }
 
 const { postTitle } = Astro.props;

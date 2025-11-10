@@ -1,9 +1,9 @@
 ---
-import { getCollection, type CollectionEntry } from "astro:content";
+import { type CollectionEntry, getCollection } from "astro:content";
 import { SeriesAccordion } from "@/components/series-accordion";
 
 export interface Props {
-  seriesList: CollectionEntry<"series">[];
+	seriesList: CollectionEntry<"series">[];
 }
 
 const { seriesList } = Astro.props;

@@ -1,63 +1,61 @@
 import { defineCollection, z } from "astro:content";
 
 const blog = defineCollection({
-  schema: ({ image }) =>
-    z.object({
-      title: z.string().transform((t) =>
-        t
-          .toLowerCase()
-          .split(" ")
-          .map(function (word) {
-            return word.replace(word[0], word[0].toUpperCase());
-          })
-          .join(" ")
-      ),
-      description: z.string(),
-      tags: z
-        .string()
-        .array()
-        .transform((tags) => tags.map((tag) => `#${tag.toLowerCase()}`)),
-      published: z.boolean().default(false),
-      isWorkInProgress: z.boolean().default(false),
-      pinned: z.boolean().default(false),
-      planned: z.boolean().default(false),
-      seriesId: z.string().optional(),
-      index: z.number().optional(),
-      pubDate: z
-        .string()
-        .or(z.date())
-        .transform((val) => new Date(val)),
-      updatedDate: z
-        .string()
-        .optional()
-        .transform((str) => (str ? new Date(str) : undefined)),
-      cover: image(),
-    }),
+	schema: ({ image }) =>
+		z.object({
+			title: z.string().transform((t) =>
+				t
+					.toLowerCase()
+					.split(" ")
+					.map((word) => word.replace(word[0], word[0].toUpperCase()))
+					.join(" "),
+			),
+			description: z.string(),
+			tags: z
+				.string()
+				.array()
+				.transform((tags) => tags.map((tag) => `#${tag.toLowerCase()}`)),
+			published: z.boolean().default(false),
+			isWorkInProgress: z.boolean().default(false),
+			pinned: z.boolean().default(false),
+			planned: z.boolean().default(false),
+			seriesId: z.string().optional(),
+			index: z.number().optional(),
+			pubDate: z
+				.string()
+				.or(z.date())
+				.transform((val) => new Date(val)),
+			updatedDate: z
+				.string()
+				.optional()
+				.transform((str) => (str ? new Date(str) : undefined)),
+			cover: image(),
+		}),
 });
 
 const series = defineCollection({
-  schema: z.object({
-    id: z.string(),
-    title: z.string(),
-    description: z.string(),
-    pinned: z.boolean().default(false),
-    published: z.boolean().default(false),
-  }),
+	schema: z.object({
+		id: z.string(),
+		title: z.string(),
+		description: z.string(),
+		pinned: z.boolean().default(false),
+		published: z.boolean().default(false),
+	}),
 });
 
 const project = defineCollection({
-  schema: z.object({
-    id: z.string(),
-    title: z.string(),
-    link: z.string().optional(),
-    published: z.boolean().default(false),
-    description: z.string(),
-    tags: z
-      .string()
-      .array()
-      .transform((tags) => tags.map((tag) => `#${tag.toLowerCase()}`)),
-    index: z.number(),
-  }),
+	schema: z.object({
+		id: z.string(),
+		title: z.string(),
+		link: z.string().optional(),
+		published: z.boolean().default(false),
+		description: z.string(),
+		tags: z
+			.string()
+			.array()
+			.transform((tags) => tags.map((tag) => `#${tag.toLowerCase()}`)),
+		index: z.number(),
+	}),
 });
 
 export const collections = { blog, series, project };

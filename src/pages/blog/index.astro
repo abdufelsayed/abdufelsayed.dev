@@ -1,23 +1,23 @@
 ---
-import { getCollection, type CollectionEntry } from "astro:content";
-import BaseLayout from "@/layouts/base-layout.astro";
+import { type CollectionEntry, getCollection } from "astro:content";
 import Posts from "@/components/posts.astro";
+import BaseLayout from "@/layouts/base-layout.astro";
 import { buttonVariants } from "@/lib/button-utils";
 import { cn } from "@/lib/utils";
 
 const posts = (await getCollection("blog"))
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-  .filter((post) => !post.data.planned && post.data.published);
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.filter((post) => !post.data.planned && post.data.published);
 
 const sortedPostsByYear = new Map<number, CollectionEntry<"blog">[]>();
 
 posts.forEach((post) => {
-  const year = post.data.pubDate.getFullYear();
-  if (sortedPostsByYear.has(year)) {
-    sortedPostsByYear.get(year)?.push(post);
-  } else {
-    sortedPostsByYear.set(year, [post]);
-  }
+	const year = post.data.pubDate.getFullYear();
+	if (sortedPostsByYear.has(year)) {
+		sortedPostsByYear.get(year)?.push(post);
+	} else {
+		sortedPostsByYear.set(year, [post]);
+	}
 });
 ---
 

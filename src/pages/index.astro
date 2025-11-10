@@ -1,33 +1,32 @@
 ---
-import BaseLayout from "@/layouts/base-layout.astro";
-import { getCollection, type CollectionEntry } from "astro:content";
-
-import Posts from "@/components/posts.astro";
-import PinnedPosts from "@/components/pinned-posts.astro";
-import SeriesList from "@/components/series.astro";
+import { type CollectionEntry, getCollection } from "astro:content";
 import Intro from "@/components/intro.astro";
+import PinnedPosts from "@/components/pinned-posts.astro";
+import Posts from "@/components/posts.astro";
+import SeriesList from "@/components/series.astro";
+import BaseLayout from "@/layouts/base-layout.astro";
 
 const posts = (await getCollection("blog"))
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-  .filter((post) => !post.data.planned && post.data.published);
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.filter((post) => !post.data.planned && post.data.published);
 
 const sortedPostsByYear = new Map<number, CollectionEntry<"blog">[]>();
 
 posts.slice(0, 3).forEach((post) => {
-  const year = post.data.pubDate.getFullYear();
-  if (sortedPostsByYear.has(year)) {
-    sortedPostsByYear.get(year)?.push(post);
-  } else {
-    sortedPostsByYear.set(year, [post]);
-  }
+	const year = post.data.pubDate.getFullYear();
+	if (sortedPostsByYear.has(year)) {
+		sortedPostsByYear.get(year)?.push(post);
+	} else {
+		sortedPostsByYear.set(year, [post]);
+	}
 });
 
 const pinnedPosts = posts.filter(
-  (post) => post.data.pinned && post.data.published
+	(post) => post.data.pinned && post.data.published,
 );
 
 const pinnedSeries = (await getCollection("series")).filter(
-  (s) => s.data.pinned && s.data.published
+	(s) => s.data.pinned && s.data.published,
 );
 ---
 

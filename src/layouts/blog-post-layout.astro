@@ -1,45 +1,45 @@
 ---
-import { getCollection, type CollectionEntry } from "astro:content";
-import FormattedDate from "@/components/formatted-date.astro";
-import BaseLayout from "@/layouts/base-layout.astro";
-import { SeriesAccordion } from "@/components/series-accordion";
-import { buttonVariants } from "@/lib/button-utils";
+import { type CollectionEntry, getCollection } from "astro:content";
 import { ArrowLeft } from "lucide-preact";
-import { cn } from "@/lib/utils";
+import FormattedDate from "@/components/formatted-date.astro";
+import { SeriesAccordion } from "@/components/series-accordion";
 import { Toc } from "@/components/toc";
+import BaseLayout from "@/layouts/base-layout.astro";
+import { buttonVariants } from "@/lib/button-utils";
+import { cn } from "@/lib/utils";
 
 type Blog = CollectionEntry<"blog">["data"];
 
 type Heading = {
-  depth: number;
-  slug: string;
-  text: string;
+	depth: number;
+	slug: string;
+	text: string;
 };
 
 export interface Props extends Blog {
-  readingTime: string;
-  headings: Heading[];
+	readingTime: string;
+	headings: Heading[];
 }
 
 const {
-  title,
-  description,
-  tags,
-  pubDate,
-  updatedDate,
-  readingTime,
-  headings,
-  seriesId,
-  index,
+	title,
+	description,
+	tags,
+	pubDate,
+	updatedDate,
+	readingTime,
+	headings,
+	seriesId,
+	index,
 } = Astro.props;
 
 const series = (await getCollection("series")).find(
-  (s) => s.data.id === seriesId
+	(s) => s.data.id === seriesId,
 );
 
 const posts = (await getCollection("blog"))
-  .filter((post) => series?.data.id === post.data.seriesId)
-  .sort((a, b) => (a.data.index as number) - (b.data.index as number));
+	.filter((post) => series?.data.id === post.data.seriesId)
+	.sort((a, b) => (a.data.index as number) - (b.data.index as number));
 ---
 
 <BaseLayout postData={{ title, description, pubDate, tags }}>

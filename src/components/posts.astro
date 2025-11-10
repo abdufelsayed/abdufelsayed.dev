@@ -3,22 +3,22 @@ import type { CollectionEntry } from "astro:content";
 import Pill from "@/components/pill.astro";
 
 export interface Props {
-  posts: Map<number, CollectionEntry<"blog">[]>;
+	posts: Map<number, CollectionEntry<"blog">[]>;
 }
 
 const months = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
+	"Jan",
+	"Feb",
+	"Mar",
+	"Apr",
+	"May",
+	"Jun",
+	"Jul",
+	"Aug",
+	"Sep",
+	"Oct",
+	"Nov",
+	"Dec",
 ];
 
 const { posts } = Astro.props;

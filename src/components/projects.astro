@@ -1,11 +1,11 @@
 ---
-import { ExternalLink } from "lucide-preact";
 import type { CollectionEntry } from "astro:content";
+import { ExternalLink } from "lucide-preact";
 import { buttonVariants } from "@/lib/button-utils";
 import { cn } from "@/lib/utils";
 
 export interface Props {
-  projects: CollectionEntry<"project">[];
+	projects: CollectionEntry<"project">[];
 }
 
 const { projects } = Astro.props;

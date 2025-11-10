@@ -1,35 +1,35 @@
 ---
-import { getCollection, type CollectionEntry } from "astro:content";
-import BaseLayout from "@/layouts/base-layout.astro";
+import { type CollectionEntry, getCollection } from "astro:content";
 import Posts from "@/components/posts.astro";
-import { cn } from "@/lib/utils";
+import BaseLayout from "@/layouts/base-layout.astro";
 import { buttonVariants } from "@/lib/button-utils";
+import { cn } from "@/lib/utils";
 
 export async function getStaticPaths() {
-  const posts = (await getCollection("blog")).filter(
-    (post) => post.data.published
-  );
-  const tags = [...new Set(posts.map((post) => post.data.tags).flat())];
-  return tags.map((tag) => ({
-    params: { tag: tag.slice(1) },
-  }));
+	const posts = (await getCollection("blog")).filter(
+		(post) => post.data.published,
+	);
+	const tags = [...new Set(posts.flatMap((post) => post.data.tags))];
+	return tags.map((tag) => ({
+		params: { tag: tag.slice(1) },
+	}));
 }
 
 const { tag: t } = Astro.params;
 
 const posts = (await getCollection("blog"))
-  .filter((post) => post.data.tags.includes(`#${t}`))
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+	.filter((post) => post.data.tags.includes(`#${t}`))
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
 const sortedPostsByYear = new Map<number, CollectionEntry<"blog">[]>();
 
 posts.forEach((post) => {
-  const year = post.data.pubDate.getFullYear();
-  if (sortedPostsByYear.has(year)) {
-    sortedPostsByYear.get(year)?.push(post);
-  } else {
-    sortedPostsByYear.set(year, [post]);
-  }
+	const year = post.data.pubDate.getFullYear();
+	if (sortedPostsByYear.has(year)) {
+		sortedPostsByYear.get(year)?.push(post);
+	} else {
+		sortedPostsByYear.set(year, [post]);
+	}
 });
 ---
 
