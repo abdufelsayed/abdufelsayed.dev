@@ -82,11 +82,11 @@ export function CodeWidget({ snippets }: CodeWidgetProps) {
 
 							this.addClassToHast(
 								node,
-								"inline-flex w-full py-0.5 border-transparent border-l-4 before:pl-3 before:pr-4 before:w-10 before:text-muted-foreground before:content-[attr(before)]",
+								"inline-flex w-full py-0.5 before:pl-3 before:pr-4 before:w-10 before:text-muted-foreground before:content-[attr(before)]",
 							);
 
 							if (isHighlighted) {
-								this.addClassToHast(node, "bg-primary/20 border-primary");
+								this.addClassToHast(node, "bg-primary/20 border-l-4 border-l-primary!");
 							}
 
 							node.properties.before = line.toString();
@@ -111,8 +111,8 @@ export function CodeWidget({ snippets }: CodeWidgetProps) {
 	};
 
 	return (
-		<Tabs defaultValue={"0"} className="flex flex-col rounded-lg border">
-			<TabsList className="h-10 justify-between rounded-t-lg rounded-b-none border-b px-4">
+		<Tabs defaultValue={"0"} className="mt-4 flex flex-col rounded-lg border">
+			<TabsList className="h-10 justify-between rounded-t-md rounded-b-none border-b px-4">
 				<div class="flex items-center justify-center gap-x-2">
 					{updatesSnippets.map(({ title, lang }, idx) => (
 						<TabsTrigger

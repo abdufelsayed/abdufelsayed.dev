@@ -100,7 +100,7 @@ export function Toc({ headings }: Props) {
 							class="flex w-full gap-x-4"
 							style={{ height: `${sectionHeights?.before}%` }}
 						>
-							<div class="ml-[0.44rem] border-l-2"></div>
+							<div class="ml-[0.44rem] border-l-2 border-l-muted"></div>
 						</li>
 					)}
 					<li
@@ -138,13 +138,13 @@ export function Toc({ headings }: Props) {
 									{section.text}
 								</p>
 							</a>
-							<div class="ml-[0.44rem] h-full border-l-2"></div>
+							<div class="ml-[0.44rem] h-full border-l-2 border-l-muted"></div>
 						</div>
 					</li>
 				</>
 			))}
 			<div
-				class="absolute top-0 left-[0.44rem] z-0 border-primary border-l-2"
+				class="absolute top-0 left-[0.44rem] z-0 border-l-2 border-l-primary!"
 				style={{ height: `${progress}%` }}
 			></div>
 		</ul>
