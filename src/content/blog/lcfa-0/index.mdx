@@ -1,0 +1,155 @@
+---
+slug: lambda-calculus-for-all-part-0-church-booleans
+title: "Lambda Calculus For All: Part 0 - Church Booleans"
+description: "A motivation tutorial for lambda calculus"
+index: 1
+pubDate: 2025-11-12
+isWorkInProgress: true
+published: true
+seriesId: lcfa
+cover: ./cover.png
+tags:
+  - lambda-calculus
+  - type-theory
+  - functional-programming
+---
+
+{/* prettier-ignore-start */}
+
+import { CodeWidget } from "@/components/code-widget";
+import { ChurchBooleanDemo } from "./church-boolean-demo";
+import { ChurchOperationsDemo } from "./church-operations-demo";
+
+export const ocamlCode = `
+type 'a boolean = 'a -> 'a -> 'a
+
+let true' : 'a boolean = fun t _ -> t
+let false' : 'a boolean = fun _ f -> f
+
+let ( && ) (a : 'a boolean) (b : 'a boolean) : 'a boolean =
+  fun x y -> a (b x y) (false' x y)
+
+let ( || ) (a : 'a boolean) (b : 'a boolean) : 'a boolean =
+  fun x y -> a (true' x y) (b x y)
+
+let ( ! ) (a : 'a boolean) : 'a boolean = fun x y -> a (false' x y) (true' x y)
+`;
+
+export const tsCode = `
+export type Bool<K> = (x: K, y: K) => K;
+
+export const _true = <K>(t: K, _f: K) => t;
+export const _false = <K>(_t: K, f: K) => f;
+
+export const and =
+  <K>(a: Bool<K>, b: Bool<K>) =>
+  (x: K, y: K) =>
+    a(b(x, y), _false(x, y));
+
+export const or =
+  <K>(a: Bool<K>, b: Bool<K>) =>
+  (x: K, y: K) =>
+    a(_true(x, y), b(x, y));
+
+export const not =
+  <K>(a: Bool<K>) =>
+  (x: K, y: K) =>
+    a(_false(x, y), _true(x, y));
+`;
+
+export const ocamlSnippet = {
+  lang: "ocaml",
+  title: "main.ml",
+  code: ocamlCode,
+};
+
+export const tsSnippet = {
+  lang: "typescript",
+  title: "index.ts",
+  code: tsCode,
+};
+
+export const snippets = [tsSnippet, ocamlSnippet];
+
+{/* prettier-ignore-end */}
+
+## What If Everything You Know Is Wrong?
+
+**BRIEF:** Start with a provocative hook that challenges the reader's assumptions. "What if I told you that primitives like booleans and numbers don't actually need to exist? What if functions are all you need?"
+
+## Welcome to the Journey
+
+**BRIEF:** Introduce the series warmly and what the reader will gain. Explain that this series will teach lambda calculus through practical examples in real programming languages (TypeScript, OCaml) before diving into formal notation. No Greek letters yet, no scary math—just code. Emphasize that whether they're a beginner or a senior engineer, they'll learn something that changes how they think about programming.
+
+## Why Should You Care?
+
+**BRIEF:** Sell the "why." Talk about:
+- Understanding the theoretical foundations that power functional programming
+- Writing better code by understanding higher-order functions deeply
+- How this knowledge appears in real systems (compilers, type theory, proof assistants)
+
+## Let's Start With Something Familiar: Booleans
+
+**BRIEF:** Transition smoothly. "Before we build a universe from functions, let's start small. Let's start with something you use every single day: `true` and `false`." Explain that we'll use Church booleans as a gentle example to demonstrate the core idea—everything can be a function.
+
+### What Booleans Really Do
+
+**BRIEF:** Get the reader thinking. What IS a boolean, really? It's not about the value—it's about the behavior. A boolean chooses between two options. That's it. When you write `if (condition) doThis() else doThat()`, the boolean is making a choice. What if the boolean could BE the choice itself?
+
+### The Twist: Booleans as Functions
+
+**BRIEF:** Present the implementation with code first, explanation second. Show the code widget. Then explain: "Look at this. `_true` is a function that takes two arguments and returns the first. `_false` returns the second. That's the entire trick." Walk through how calling these functions makes the choice for you. No if-statements needed—the function IS the if-statement.
+
+<CodeWidget snippets={snippets} client:load />
+
+### See It In Action
+
+**BRIEF:** Use the interactive demo to let readers experiment. "Try it yourself. Pick values and toggle between true and false. Watch how the function picks one or the other. The boolean isn't a value—it's a chooser."
+
+<ChurchBooleanDemo client:load />
+
+## Building a Boolean Algebra From Scratch
+
+**BRIEF:** Now amp up the excitement. "Here's where it gets really cool. We can implement AND, OR, and NOT using only these function definitions. No language features, no primitives—just pure functions."
+
+### NOT: The Argument Swap
+
+**BRIEF:** Explain NOT intuitively. To flip a boolean, swap what it chooses. If true picks the first argument, make it pick the second by swapping the arguments we pass. Walk through the implementation simply.
+
+### AND: Choose the Second Only If Both Are True
+
+**BRIEF:** Explain AND step-by-step. If the first is true, evaluate the second. If the first is false, return false immediately. Show how the function composition makes this work naturally.
+
+### OR: Choose the First If Either Is True
+
+**BRIEF:** Explain OR similarly. If the first is true, return true immediately. If the first is false, evaluate the second. Again, show how this emerges naturally from function composition.
+
+## Put It All Together
+
+**BRIEF:** Present the operations demo. Challenge the reader to predict results before running them. "Now you have a complete boolean algebra built from nothing but functions. Let that sink in."
+
+<ChurchOperationsDemo client:load />
+
+## What Just Happened Here?
+
+**BRIEF:** Step back and reflect. "You just built an entire boolean system without any primitives. This is called Church encoding, named after Alonzo Church. But here's the kicker: if you can do this with booleans, you can do this with anything. Numbers. Lists. Trees. Entire data structures." Tease that this is just the beginning.
+
+## The Road Ahead
+
+**BRIEF:** Preview the series without overwhelming. Explain that future posts will cover:
+- Lambda calculus notation (the formal syntax)
+- Church numerals (numbers as functions)
+- etc...
+
+Reassure them: we'll take it one step at a time, always with code before theory.
+
+## Try This at Home
+
+**BRIEF:** Give 2-3 simple exercises:
+1. Implement XOR (exclusive or) using the functions above
+2. Implement IMPLIES (x implies y, which is !x || y)
+3. Challenge: Can you implement a three-way choice? (Hint: what if a "tribool" takes three arguments instead of two?)
+
+## Final Thoughts
+
+**BRIEF:** Wrap up inspirationally. "If you're feeling your brain stretch a little, that's good. You've just taken your first step into understanding the deepest foundations of computation. And we did it without a single Greek letter or scary mathematical notation. In the next post, we'll formalize what you just learned and then push even further. See you there."

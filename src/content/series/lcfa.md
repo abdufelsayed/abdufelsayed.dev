@@ -6,5 +6,4 @@ description:
   series while studying so I might make errors. If you found any errors in my
   posts please get in touch."
 published: false
-pinned: false
 ---

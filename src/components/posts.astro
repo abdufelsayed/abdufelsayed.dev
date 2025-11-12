@@ -1,5 +1,5 @@
 ---
-import type { CollectionEntry } from "astro:content";
+import { type CollectionEntry, getCollection } from "astro:content";
 
 export interface Props {
 	posts: CollectionEntry<"blog">[];
@@ -21,20 +21,30 @@ const months = [
 ];
 
 const { posts } = Astro.props;
+const seriesList = await getCollection("series");
 ---
 
 <ul class="space-y-3">
   {
-    posts.map((post) => (
-      <li>
-        <span class="text-sm text-muted-foreground">{`${post.data.pubDate.getDate()} ${
-          months[post.data.pubDate.getMonth()]
-        }`}</span>
-        {" "}
-        <a href={`blog/${post.slug}`} class="text-base hover:underline">
-          {post.data.title}
-        </a>
-      </li>
-    ))
+    posts.map((post) => {
+      const series = post.data.seriesId
+        ? seriesList.find((s) => s.data.id === post.data.seriesId)
+        : null;
+      return (
+        <li class="flex items-center gap-2">
+          <span class="text-xs text-muted-foreground">{`${post.data.pubDate.getDate()} ${
+            months[post.data.pubDate.getMonth()]
+          } ${post.data.pubDate.getFullYear()}`}</span>
+          <a href={`blog/${post.slug}`} class="text-base hover:underline">
+            {post.data.title}
+          </a>
+          {post.data.isWorkInProgress && (
+            <span class="ml-auto inline-flex items-center justify-center whitespace-nowrap rounded-full border border-orange-500! bg-orange-500/20 px-2.5 py-0.5 text-xs text-orange-500">
+              In Progress
+            </span>
+          )}
+        </li>
+      );
+    })
   }
 </ul>
