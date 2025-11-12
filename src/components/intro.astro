@@ -1,7 +1,8 @@
 ---
-import { Github, Linkedin, Rss } from "lucide-preact";
+import { FileText, Github, Linkedin, Rss } from "lucide-preact";
 import { GITHUB_HANDLE, LINKEDIN_HANDLE, X_HANDLE } from "@/consts";
 import { buttonVariants } from "@/lib/button-utils";
+import { cn } from "@/lib/utils";
 ---
 
 <div class="space-y-4">
@@ -21,14 +22,22 @@ import { buttonVariants } from "@/lib/button-utils";
       </p>
     </div>
   </div>
-  <div class="flex space-x-1">
+  <div class="flex flex-wrap items-center gap-1">
+    <a
+      href="/resume.pdf"
+      target="_blank"
+      class={buttonVariants({ variant: "outline", size: "sm" })}
+    >
+      <FileText class="mr-2 size-3.5" />
+      Resume
+    </a>
     <a
       href=`https://x.com/${X_HANDLE}`
       target="_blank"
-      class={buttonVariants({ variant: "outline", size: "icon" })}
+      class={cn(buttonVariants({ variant: "outline", size: "icon" }), "h-8 w-8")}
     >
       <svg
-        class="h-3.5 w-3.5 fill-foreground"
+        class="size-3.5 fill-foreground"
         role="img"
         viewBox="0 0 24 24"
         xmlns="http://www.w3.org/2000/svg"
@@ -41,25 +50,25 @@ import { buttonVariants } from "@/lib/button-utils";
     <a
       href=`https://linkedin.com/in/${LINKEDIN_HANDLE}`
       target="_blank"
-      class={buttonVariants({ variant: "outline", size: "icon" })}
+      class={cn(buttonVariants({ variant: "outline", size: "icon" }), "h-8 w-8")}
     >
-      <Linkedin class="h-3.5 w-3.5" />
+      <Linkedin class="size-3.5" />
       <span class="sr-only">LinkedIn</span>
     </a>
     <a
       href=`https://github.com/${GITHUB_HANDLE}`
       target="_blank"
-      class={buttonVariants({ variant: "outline", size: "icon" })}
+      class={cn(buttonVariants({ variant: "outline", size: "icon" }), "h-8 w-8")}
     >
-      <Github class="h-3.5 w-3.5" />
+      <Github class="size-3.5" />
       <span class="sr-only">Github</span>
     </a>
     <a
       href="/rss.xml"
       target="_blank"
-      class={buttonVariants({ variant: "outline", size: "icon" })}
+      class={cn(buttonVariants({ variant: "outline", size: "icon" }), "h-8 w-8")}
     >
-      <Rss class="h-3.5 w-3.5" />
+      <Rss class="size-3.5" />
       <span class="sr-only">RSS</span>
     </a>
   </div>

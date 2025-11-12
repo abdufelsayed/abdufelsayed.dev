@@ -2,6 +2,7 @@
 import { Github, Linkedin, Network, Rss } from "lucide-preact";
 import { GITHUB_HANDLE, LINKEDIN_HANDLE, X_HANDLE } from "@/consts";
 import { buttonVariants } from "@/lib/button-utils";
+import { cn } from "@/lib/utils";
 
 const today = new Date();
 ---
@@ -15,10 +16,10 @@ const today = new Date();
       <a
         href=`https://x.com/${X_HANDLE}`
         target="_blank"
-        class={buttonVariants({ variant: "ghost", size: "icon" })}
+        class={cn(buttonVariants({ variant: "ghost", size: "icon" }), "h-8 w-8")}
       >
         <svg
-          class="h-3.5 w-3.5 fill-foreground"
+          class="size-3 fill-foreground"
           role="img"
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
@@ -31,33 +32,33 @@ const today = new Date();
       <a
         href=`https://linkedin.com/in/${LINKEDIN_HANDLE}`
         target="_blank"
-        class={buttonVariants({ variant: "ghost", size: "icon" })}
+        class={cn(buttonVariants({ variant: "ghost", size: "icon" }), "h-8 w-8")}
       >
-        <Linkedin class="h-3.5 w-3.5" />
+        <Linkedin class="size-3" />
         <span class="sr-only">LinkedIn</span>
       </a>
       <a
         href=`https://github.com/${GITHUB_HANDLE}`
         target="_blank"
-        class={buttonVariants({ variant: "ghost", size: "icon" })}
+        class={cn(buttonVariants({ variant: "ghost", size: "icon" }), "h-8 w-8")}
       >
-        <Github class="h-3.5 w-3.5" />
+        <Github class="size-3.5" />
         <span class="sr-only">Github</span>
       </a>
       <a
         href="/rss.xml"
         target="_blank"
-        class={buttonVariants({ variant: "ghost", size: "icon" })}
+        class={cn(buttonVariants({ variant: "ghost", size: "icon" }), "h-8 w-8")}
       >
-        <Rss class="h-3.5 w-3.5" />
+        <Rss class="size-3.5" />
         <span class="sr-only">RSS</span>
       </a>
       <a
         href="/sitemap-index.xml"
         target="_blank"
-        class={buttonVariants({ variant: "ghost", size: "icon" })}
+        class={cn(buttonVariants({ variant: "ghost", size: "icon" }), "h-8 w-8")}
       >
-        <Network class="h-3.5 w-3.5" />
+        <Network class="size-3.5" />
         <span class="sr-only">Sitemap</span>
       </a>
     </div>
