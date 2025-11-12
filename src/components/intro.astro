@@ -1,5 +1,7 @@
 ---
 import { FileText, Github, Linkedin, Rss } from "lucide-preact";
+import resumeFile from "@/assets/resume.pdf";
+import selfImage from "@/assets/self.png";
 import { GITHUB_HANDLE, LINKEDIN_HANDLE, X_HANDLE } from "@/consts";
 import { buttonVariants } from "@/lib/button-utils";
 import { cn } from "@/lib/utils";
@@ -8,23 +10,23 @@ import { cn } from "@/lib/utils";
 <div class="space-y-4">
   <div class="flex items-start gap-4">
     <img
-      src="/self.png"
+      src={selfImage.src}
       alt="Abdullah Elsayed"
       class="h-24 w-24 shrink-0 rounded-lg object-cover sm:h-28 sm:w-28"
     />
     <div class="flex-1 space-y-2">
-      <h1 class="text-2xl font-bold sm:text-3xl">
-        Hi, I'm Abdullah
-      </h1>
+      <h1 class="text-2xl font-bold sm:text-3xl">Hi, I'm Abdullah</h1>
       <p class="text-muted-foreground leading-relaxed">
-        I'm a software engineer passionate about programming languages, type theory, and functional programming.
-        I write about topics ranging from web development to theoretical computer science, with a focus on making complex ideas accessible.
+        I'm a software engineer passionate about programming languages, type
+        theory, and functional programming. I write about topics ranging from
+        web development to theoretical computer science, with a focus on making
+        complex ideas accessible.
       </p>
     </div>
   </div>
   <div class="flex flex-wrap items-center gap-1">
     <a
-      href="/resume.pdf"
+      href={resumeFile}
       target="_blank"
       class={buttonVariants({ variant: "outline", size: "sm" })}
     >
@@ -34,7 +36,10 @@ import { cn } from "@/lib/utils";
     <a
       href=`https://x.com/${X_HANDLE}`
       target="_blank"
-      class={cn(buttonVariants({ variant: "outline", size: "icon" }), "h-8 w-8")}
+      class={cn(
+        buttonVariants({ variant: "outline", size: "icon" }),
+        "h-8 w-8"
+      )}
     >
       <svg
         class="size-3.5 fill-foreground"
@@ -50,7 +55,10 @@ import { cn } from "@/lib/utils";
     <a
       href=`https://linkedin.com/in/${LINKEDIN_HANDLE}`
       target="_blank"
-      class={cn(buttonVariants({ variant: "outline", size: "icon" }), "h-8 w-8")}
+      class={cn(
+        buttonVariants({ variant: "outline", size: "icon" }),
+        "h-8 w-8"
+      )}
     >
       <Linkedin class="size-3.5" />
       <span class="sr-only">LinkedIn</span>
@@ -58,7 +66,10 @@ import { cn } from "@/lib/utils";
     <a
       href=`https://github.com/${GITHUB_HANDLE}`
       target="_blank"
-      class={cn(buttonVariants({ variant: "outline", size: "icon" }), "h-8 w-8")}
+      class={cn(
+        buttonVariants({ variant: "outline", size: "icon" }),
+        "h-8 w-8"
+      )}
     >
       <Github class="size-3.5" />
       <span class="sr-only">Github</span>
@@ -66,7 +77,10 @@ import { cn } from "@/lib/utils";
     <a
       href="/rss.xml"
       target="_blank"
-      class={cn(buttonVariants({ variant: "outline", size: "icon" }), "h-8 w-8")}
+      class={cn(
+        buttonVariants({ variant: "outline", size: "icon" }),
+        "h-8 w-8"
+      )}
     >
       <Rss class="size-3.5" />
       <span class="sr-only">RSS</span>
