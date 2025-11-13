@@ -2,22 +2,22 @@
 import { type CollectionEntry, getCollection } from "astro:content";
 
 export interface Props {
-	posts: CollectionEntry<"blog">[];
+  posts: CollectionEntry<"blog">[];
 }
 
 const months = [
-	"Jan",
-	"Feb",
-	"Mar",
-	"Apr",
-	"May",
-	"Jun",
-	"Jul",
-	"Aug",
-	"Sep",
-	"Oct",
-	"Nov",
-	"Dec",
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
 ];
 
 const { posts } = Astro.props;

@@ -72,7 +72,7 @@ export function CodeWidget({ snippets }: CodeWidgetProps) {
           {
             name: "custom-line-numbers",
             pre(node) {
-              this.addClassToHast(node, "flex w-full text-sm !bg-background");
+              this.addClassToHast(node, "flex w-full text-sm !bg-black");
             },
             code(node) {
               this.addClassToHast(node, "flex flex-col w-full");
@@ -114,8 +114,8 @@ export function CodeWidget({ snippets }: CodeWidgetProps) {
   };
 
   return (
-    <Tabs defaultValue={"0"} className="mt-4 flex flex-col rounded-lg border">
-      <TabsList className="h-10 justify-between rounded-t-md rounded-b-none border-b px-4">
+    <Tabs defaultValue={"0"} className="mt-4 flex flex-col rounded-lg">
+      <TabsList className="h-10 justify-between rounded-t-lg rounded-b-none border border-b-0 px-4">
         <div class="flex items-center justify-center gap-x-2">
           {updatesSnippets.map(({ title, lang }, idx) => (
             <TabsTrigger
@@ -146,7 +146,7 @@ export function CodeWidget({ snippets }: CodeWidgetProps) {
 
       {updatesSnippets.map((_, idx) => (
         <TabsContent
-          className="not-prose scrollbar-thin scrollbar-track-muted/30 scrollbar-thumb-muted m-0 max-h-96 overflow-auto py-2"
+          className="not-prose scrollbar-thin scrollbar-track-muted/30 scrollbar-thumb-muted m-0 max-h-96 overflow-auto rounded-b-lg bg-black py-2"
           value={idx.toString()}
           dangerouslySetInnerHTML={{ __html: highlightedCodes[idx] }}
         />
