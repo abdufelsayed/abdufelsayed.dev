@@ -1,6 +1,6 @@
 # Personal Website using Astro and Tailwind
 
-Check out the [demo](https://abdllah.dev)
+Check out the [demo](https://abdufelsayed.dev)
 
 ## Features
 

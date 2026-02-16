@@ -1,0 +1,18 @@
+{
+	"main": "dist/_worker.js/index.js",
+  "name": "abdufelsayed-dev",
+  "compatibility_date": "2026-02-16",
+  "workers_dev": true,
+  "preview_urls": true,
+  "compatibility_flags": [
+    "nodejs_compat",
+    "global_fetch_strictly_public"
+  ],
+	"assets": {
+		"binding": "ASSETS",
+		"directory": "./dist"
+	},
+	"observability": {
+    "enabled": true
+  }
+}

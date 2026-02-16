@@ -6,6 +6,8 @@ import { defineConfig } from "astro/config";
 import rehypePrettyCode from "rehype-pretty-code";
 import remarkReadingTime from "./src/plugins/remark-reading-time.mjs";
 
+import cloudflare from "@astrojs/cloudflare";
+
 const rehypePrettyCodeOptions = {
 	theme: "dracula",
 	onVisitLine(node) {
@@ -28,14 +30,18 @@ const rehypePrettyCodeOptions = {
 
 // https://astro.build/config
 export default defineConfig({
-	site: "https://abdllah.dev",
+	site: "https://abdufelsayed.dev",
 	integrations: [preact({ compat: true }), mdx(), sitemap()],
+
 	vite: {
 		plugins: [tailwindcss()],
 	},
+
 	markdown: {
 		syntaxHighlight: false,
 		rehypePlugins: [[rehypePrettyCode, rehypePrettyCodeOptions]],
 		remarkPlugins: [remarkReadingTime],
 	},
+
+	adapter: cloudflare(),
 });
