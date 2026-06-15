@@ -8,26 +8,26 @@ const projects = [
 	{
 		name: "Weldr",
 		description:
-			"AI coding platform where agents generate working codebases and model repositories as semantic call graphs, with visual canvas highlighting key architectural components.",
+			"Agentic coding tool for full-stack apps that makes generated code inspectable through code search, semantic call graphs, visual architecture maps, branching/snapshots, and integrations.",
 		link: "https://github.com/weldr-ai/weldr-old",
 		icon: weldrIcon,
 	},
 	{
 		name: "Thoth",
 		description:
-			"Statically-typed multitier DSL implemented in OCaml where a single source program defines database, server, and client tiers, compiling to human-readable TypeScript/React/Node/Prisma code with SSE support.",
+			"A multitier web DSL for describing data models, queries, pages, auth, and UI in one source language, then compiling them to readable React/Vite, Node/Express, and Prisma code with static checks across the stack.",
 		link: "https://github.com/abdufelsayed/thoth",
 	},
 	{
 		name: "Awskit",
 		description:
-			"Modular OCaml libraries for AWS client development, with pure core packages for credentials, endpoints, SigV4 signing, retries, request/response metadata, and runtime abstraction. The current service surface focuses on S3 buckets, objects, multipart uploads, presigned URLs, policies, Eio/Lwt adapters, and deterministic in-memory simulation for tests.",
+			"OCaml AWS libraries for credentials, endpoints, SigV4 signing, retries, S3 uploads, presigned URLs, and test simulation.",
 		link: "https://github.com/abdufelsayed/awskit",
 	},
 	{
 		name: "Nimbus Narratives",
 		description:
-			"Accessible Astro/Preact/Tailwind blog theme with 43 stars, 12 forks, 100/100 Lighthouse performance, SEO metadata, sitemap, RSS, and MDX support.",
+			"Accessible Astro/Preact/Tailwind blog theme with MDX content, RSS, sitemap, SEO metadata, and a 100/100 Lighthouse performance score.",
 		link: "https://github.com/abdufelsayed/nimbus-narratives",
 	},
 ];
@@ -53,16 +53,20 @@ const projects = [
 						)}
 					</div>
 					<div class="min-w-0 flex-1">
-						<div class="flex items-center justify-between gap-4">
-							<span class="font-medium text-base">{project.name}</span>
+						<div class="flex min-w-0 items-center justify-between gap-4">
+							<span class="min-w-0 truncate font-medium text-base">
+								{project.name}
+							</span>
 							<a
 								href={project.link}
 								target="_blank"
 								rel="noopener noreferrer"
-								class="text-xs text-muted-foreground hover:underline underline-offset-2 shrink-0 flex items-center gap-1"
+								class="flex min-w-0 max-w-[55%] shrink items-center gap-1 overflow-hidden text-ellipsis whitespace-nowrap text-xs text-muted-foreground underline-offset-2 hover:underline sm:max-w-none"
 							>
-								{project.link.replace(/^https?:\/\//, "")}
-								<ExternalLink class="h-3 w-3" />
+								<span class="min-w-0 truncate">
+									{project.link.replace(/^https?:\/\//, "")}
+								</span>
+								<ExternalLink class="h-3 w-3 shrink-0" />
 							</a>
 						</div>
 						{project.description && (

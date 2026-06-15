@@ -1,7 +1,7 @@
 export const SITE_NAME = "abdufelsayed.dev";
 export const SITE_TITLE = "abdufelsayed.dev";
 export const SITE_DESCRIPTION =
-	"In this blog, I write about anything from Web Development to AI and Theoretical CS.";
+	"Personal site of Abdullah Elsayed, a software engineer working on developer tools, AI agent systems, compilers, and full-stack web apps.";
 export const SITE_AUTHOR = "Abdullah Elsayed (@abdufelsayed)";
 export const X_HANDLE = "abdufelsayed";
 export const GITHUB_HANDLE = "abdufelsayed";

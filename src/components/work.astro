@@ -13,7 +13,7 @@ const workExperience = [
 		role: "Founding Engineer",
 		period: "Jan 2024 - Apr 2026",
 		description:
-			"Built a voice AI platform for phone-based conversational agents, including Python/FastAPI services handling 1M+ calls daily, Next.js dashboards, and Dockerized GCP deployments.",
+			"Helped scale Aim's voice agent platform from pre-revenue to about $8M ARR and 1M daily calls, working across the voice agent runtime, dashboard, public API, agent configuration, outbound campaigns, call review, analytics, evals, dashboard-configured agent tools, and GCP deployments.",
 		link: "https://www.aimnow.ai",
 		icon: aimIcon,
 	},
@@ -22,7 +22,7 @@ const workExperience = [
 		role: "Full-Stack Engineer",
 		period: "Jul 2022 - Sep 2022",
 		description:
-			"Built HiddenGem, an NFT analytics platform with real-time floor prices, trading volumes, and on-chain data aggregation from Ethereum marketplaces.",
+			"Built HiddenGem, a Next.js NFT analytics dashboard for real-time floor prices, trading volume, trending collections, and wallet insights, with Ethereum event ingestion for sales, transfers, and marketplace data.",
 		link: "https://web.archive.org/web/20230329031706/https://www.fusion.xyz/",
 		icon: fusionIcon,
 	},
@@ -49,24 +49,28 @@ const workExperience = [
             )}
           </div>
           <div class="min-w-0 flex-1">
-            <div class="flex items-center justify-between gap-4">
-              <span class="font-medium text-base">{job.company}</span>
+            <div class="flex min-w-0 items-center justify-between gap-4">
+              <span class="min-w-0 truncate font-medium text-base">
+                {job.company}
+              </span>
               {job.link && (
                 <a
                   href={job.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="text-xs text-muted-foreground hover:underline underline-offset-2 shrink-0 flex items-center gap-1"
+                  class="flex min-w-0 max-w-[55%] shrink items-center gap-1 overflow-hidden text-ellipsis whitespace-nowrap text-xs text-muted-foreground underline-offset-2 hover:underline sm:max-w-none"
                 >
-                  {job.link.includes("web.archive.org")
-                    ? (() => {
-                        const match = job.link.match(
-                          /\/https?:\/\/www\.([^\/]+)/
-                        );
-                        return match ? `${match[1]} (archived)` : "Archive";
-                      })()
-                    : job.link.replace(/^https?:\/\/(www\.)?/, "")}
-                  <ExternalLink class="h-3 w-3" />
+                  <span class="min-w-0 truncate">
+                    {job.link.includes("web.archive.org")
+                      ? (() => {
+                          const match = job.link.match(
+                            /\/https?:\/\/www\.([^\/]+)/
+                          );
+                          return match ? `${match[1]} (archived)` : "Archive";
+                        })()
+                      : job.link.replace(/^https?:\/\/(www\.)?/, "")}
+                  </span>
+                  <ExternalLink class="h-3 w-3 shrink-0" />
                 </a>
               )}
             </div>
